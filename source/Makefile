@@ -7,7 +7,7 @@ MD   = title.md preface.md editor.md license.md focus.md focus1.md focus2.md art
 PARG = -c ../css/pmag.css -B header.htm -A footer.htm --toc --base-header-level=1 --toc-depth=2 
 PEPUB = --toc --base-header-level=1 --toc-depth=2 --epub-metadata=metadata.xml --epub-stylesheet=../css/pmag.css 
 EARG = --margin-top=16 --margin-bottom=16 --margin-left=20 --margin-right=20 \
---pretty-print --base-font-size=14 --font-size-mapping="10, 12, 14, 16, 20, 24, 28, 36" 
+--pretty-print --base-font-size=9 --font-size-mapping="10, 12, 14, 16, 20, 24, 28, 36" 
 # 
 # --embed-font-family --extra-css="../css/pmag.css" 
 RM = rm -f
