@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="2014 年 8 月號" />
+  <title>程式人雜誌</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../css/pmag.css" type="text/css" />
+</head>
+<body>
+<div id="header_wrap">
+   <h1><a href="https://www.facebook.com/groups/programmerMagazine">程式人雜誌</a> <sub> --  <a href="http://programmermagazine.github.io/201408/htm/home.html">2014 年 8 月號</a> (開放公益出版品)</sub></h1>
+</div>
+<div id="content">
+<div id="header">
+<h1 class="title"><a href="https://www.facebook.com/groups/programmerMagazine/">程式人雜誌</a></h1>
+<h2 class="author">2014 年 8 月號</h2>
+<h3 class="date">本期焦點：FPGA 可程式化電路</h3>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#前言">前言</a><ul>
+<li><a href="#編輯小語">編輯小語</a></li>
+<li><a href="#授權聲明">授權聲明</a></li>
+</ul></li>
+<li><a href="#本期焦點">本期焦點</a><ul>
+<li><a href="#fpga-簡介">FPGA 簡介</a></li>
+<li><a href="#fpga-的設計流程與開發工具----使用-icarus-altera-quartus-ii-北瀚-fpga-板子">FPGA 的設計流程與開發工具 -- 使用 Icarus + Altera Quartus II + 北瀚 FPGA 板子</a></li>
+</ul></li>
+<li><a href="#程式人文集">程式人文集</a><ul>
+<li><a href="#開放電腦計畫-13----將-mcu0-放上-fpga-執行-作者陳鍾誠">開放電腦計畫 (13) -- 將 MCU0 放上 FPGA 執行 (作者：陳鍾誠)</a></li>
+<li><a href="#從-arduino-到-avr-晶片3----timers-作者cooper-maa">從 Arduino 到 AVR 晶片(3) -- Timers (作者：Cooper Maa)</a></li>
+<li><a href="#泰勒级数-taylor-series-作者bridan">泰勒级数 (Taylor series) (作者：Bridan)</a></li>
+<li><a href="#visual-basic-6.0-利用-webbrowser-寫-html-網頁預覽器-作者廖憲得-0xde">[Visual Basic 6.0] 利用 WebBrowser 寫 Html 網頁預覽器 (作者：廖憲得 0xde)</a></li>
+</ul></li>
+<li><a href="#雜誌訊息">雜誌訊息</a><ul>
+<li><a href="#讀者訂閱">讀者訂閱</a></li>
+<li><a href="#投稿須知">投稿須知</a></li>
+<li><a href="#參與編輯">參與編輯</a></li>
+<li><a href="#公益資訊">公益資訊</a></li>
+</ul></li>
+</ul>
+</div>
+<h1 id="前言">前言</h1>
+<h2 id="編輯小語">編輯小語</h2>
+<p>在本期的「程式人雜誌」中，聚焦的主題是「FPGA 技術與 Verilog 硬體描述語言」。</p>
+<p>雖然「程式人」撰寫的通常是「軟體程式」，但是在 Maker 運動與 Prototyping 技術越來越發達的今天，程式人所能做的事情已經越來越多了。</p>
+<p>我們可以用 Verilog 或 VHDL 設計「硬體描述程式」，然後轉為電路燒到 FPGA 板當中，也可以用電腦設計 3D 模型，然後用 3D 印表機列印出來，甚至可以用電腦設計電路，然後用像 Eagle 或 Altium Designer 這樣的軟體轉成 PCB 電路，之後再用雕刻機或洗電路的方式將電路做出來。</p>
+<p>或許、在未來的某一天，我們可以把「3D 模型、Verilog、電路」等等都用電腦設計出來，然後用一台「超級印表機」，直接印出一台完整的「手機」了也說不定！</p>
+<p>---- （程式人雜誌編輯 - 陳鍾誠）</p>
+<h2 id="授權聲明">授權聲明</h2>
+<p>本雜誌許多資料修改自維基百科，採用 創作共用：<a href="http://creativecommons.org/licenses/by-sa/3.0/tw/">姓名標示、相同方式分享</a> 授權，若您想要修改本書產生衍生著作時，至少應該遵守下列授權條件：</p>
+<ol style="list-style-type: decimal">
+<li>標示原作者姓名 (包含該文章作者，若有來自維基百科的部份也請一併標示)。</li>
+<li>採用 創作共用：<a href="http://creativecommons.org/licenses/by-sa/3.0/tw/">姓名標示、相同方式分享</a> 的方式公開衍生著作。</li>
+</ol>
+<p>另外、當本雜誌中有文章或素材並非採用 <a href="http://creativecommons.org/licenses/by-sa/3.0/tw/">姓名標示、相同方式分享</a> 時，將會在該文章或素材後面標示其授權，此時該文章將以該標示的方式授權釋出，請修改者注意這些授權標示，以避免產生侵權糾紛。</p>
+<p>例如有些文章可能不希望被作為「商業性使用」，此時就可能會採用創作共用：<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/tw/">姓名標示、非商業性、相同方式分享</a> 的授權，此時您就不應當將該文章用於商業用途上。</p>
+<p>最後、懇請勿移除公益捐贈的相關描述，以便讓愛心得以持續散播！</p>
+<h1 id="本期焦點">本期焦點</h1>
+<h2 id="fpga-簡介">FPGA 簡介</h2>
+<p>在目前的數位電路技術當中，FPGA與CPLD是兩種可程式化的電路裝置，其中CPLD是永久性可程式化電路，只要燒錄進去之後就會永久存在，即使關機重開，電路仍然會存在的一種技術。而FPGA則是像 RAM一樣在關機後就會消失的可程式化電路，因此通常會搭配一塊 EPROM ，在開機的時候將電路燒錄到FPGA當中，讓電路看起來就像永久存在一樣。</p>
+<div class="figure">
+<img src="../img/FPGA_IC.png" alt="圖、Altera StratixIVGX FPGA" /><p class="caption">圖、Altera StratixIVGX FPGA</p>
+</div>
+<p>FPGA 是由一種稱為 CLB (Configurable Logic Block) 或 LAB (Logic Array Block) 的基礎區塊所組成的。下圖是一個 CLB 區塊的典型結構，其中包含一個全加器 (FA)、一個 D-Type 的正反器、三個多工器 (mux) 與兩個三輸入的 Lookup tables (3-LUTs)。</p>
+<div class="figure">
+<img src="../img/cell.png" alt="圖、FPGA 的邏輯區塊 CLB" /><p class="caption">圖、FPGA 的邏輯區塊 CLB</p>
+</div>
+<p>在上圖的 CLB 區塊中，如果走上面的全加器路徑，兩個 3-LUTs 的輸出會被相加，加上 carry-in 之後就成了一組完整的全加器電路。由於該全加器FA的輸入是3-LUTs 的輸出，因此 carry-out 的輸出結果可以寫成如下算式。</p>
+<blockquote>
+<p>carry-out = FA(carry-in, 3-LUT(a,b,c), 3-LUT(a,b,c))</p>
+</blockquote>
+<p>而且 3-LUT(a,b,c) 的輸出可以是一個三輸入的邏輯真值表，因此可以建構出任意的 a,b,c 等三輸入的邏輯電路組合。</p>
+<p>舉例而言，如果兩個 3-LUT 分別是 (a and b) or c 與 a xor (b and c) 的話，那輸出結果就會是</p>
+<blockquote>
+<p>carry-out = FA(carry-in, (a and b) or c, a xor (b and c))</p>
+</blockquote>
+<p>當然、如果走下面的 mux 路徑，就不會進行加法運算，而是進行二選一的多工運算，因此會在兩個LUT 的結果當中選擇一個作為輸出。</p>
+<p>最後、這個輸出可能會經過 D 正反器 (DFF) 進行儲存動作後再輸出，或者是直接輸出到 out 線路中。</p>
+<p>而這些 CLB 區塊會透過下列的 Switch Box 連接形成更大的區塊，每個 Switch Box 的結構如下圖所示。</p>
+<div class="figure">
+<img src="../img/switchbox.png" alt="圖、切換盒 Switch Box" /><p class="caption">圖、切換盒 Switch Box</p>
+</div>
+<p>目前的 FPGA 晶片容量，通常包含數十萬到數百萬個 CLB 邏輯單元，因此已經可以用 FPGA 做出非常複雜的電路，甚至可以將上千顆處理器燒錄到這些 FPGA 晶片中，成為一台超級平行電腦。以下是 Xilinx 公司的 FPGA IC 規格表。</p>
+<div class="figure">
+<img src="../img/XilinxTable.png" alt="圖、 Xilinx 的各款 FPGA IC 容量規格表(以上表格來自 Xilinx 的網站，網址為： http://www.xilinx.com/products/silicon-devices/fpga/)" /><p class="caption">圖、 Xilinx 的各款 FPGA IC 容量規格表(以上表格來自 Xilinx 的網站，網址為： http://www.xilinx.com/products/silicon-devices/fpga/)</p>
+</div>
+<p>目前FPGA的兩大廠商是 Xilinx 與 Altera，這兩家廠商供應 FPGA IC、開發板與設計工具軟體等產品，而其他的小廠則通常採購這兩家的 IC 放入自己設計的電路板中，因為 IC 的設計與生產成本通常較高，所以小廠通常沒有足夠的經費去設計與量產 FPGA IC。</p>
+<p>在開放原始碼的領域，目前我們看到有 Gadget Factory 這家公司釋出了開放的 FPGA 電路板，該公司已經生產了 Papilio One, Papilio Pro 與 Papilio DUO 等三款 FPGA 電路板。 Papilio 電路板的特色是具有模仿 arduino 開發板的功能，並且修改了 arduino 的開發工具，讓您可以在 Papilio FPGA 板中撰寫 arduino 程式。以下是 Papilio One 電路板的圖片。</p>
+<div class="figure">
+<img src="../img/papilio1.jpg" alt="圖、Papilio One FPGA 電路板" /><p class="caption">圖、Papilio One FPGA 電路板</p>
+</div>
+<p>在台灣，北瀚科技 (SMIMS) 也有設計生產 FPGA 電路板，筆者目前正與北瀚科技洽談有關設計開放原始碼的 FPGA 軟硬體當中，希望可以透過這個合作創建一台從軟體、硬體到 CPU 全部開放的電腦。當然、這將會是一台 FPGA 電腦，這樣的設計雖然效能不見得很好，但是卻會是一台非常適合學校教學研究用的電腦。</p>
+<p>筆者已經為這個目標撰寫了一本書，連結如下：</p>
+<ul>
+<li><a href="http://ccckmit.github.io/co/htm/book.html">開放電腦計畫-計算機硬體結構 (使用 Verilog 實作)</a></li>
+</ul>
+<p>如果與北瀚科技的合作能成功的話，我們會將「軟體、硬體與書籍」全部都以開放原始碼的方式公開發行。</p>
+<p>目前北瀚科技已經釋出了兩塊開放原始碼的電路板在 github 上，網址如下：</p>
+<ul>
+<li><a href="https://github.com/ccckmit/OpenFpgaBoard">https://github.com/ccckmit/OpenFpgaBoard</a></li>
+</ul>
+<p>但是其中有一顆 SMIMS 引擎與對應的程式還沒開放原始碼，所以筆者還在尋求完整開放的可能性，讓台灣的公司也能以更開放的態度面對 open source 社群。</p>
+<p>後記：筆者認為、過去幾十年台灣有很好的電腦硬體製造基礎，因此有很多開放硬體的人才，他們有能力設計出像 arduino 或樹莓派 (raspberry Pi) 這樣的硬體與軟體，但是由於缺乏開放原始碼的思維，因此 arduino 與樹莓派都不是台灣的公司或組織所設計出來的。筆者相信、在當今的世界中，開放的心態會是很重要的，透過開放硬體的方式，或許可以為日漸衰落的台灣硬體產業，找到一條全新的道路也說不定。</p>
+<p>【本文由陳鍾誠取材並修改自 <a href="http://zh.wikipedia.org/">維基百科</a>，採用創作共用的 <a href="http://creativecommons.org/licenses/by-sa/3.0/tw/">姓名標示、相同方式分享</a> 授權】</p>
+<h2 id="fpga-的設計流程與開發工具----使用-icarus-altera-quartus-ii-北瀚-fpga-板子">FPGA 的設計流程與開發工具 -- 使用 Icarus + Altera Quartus II + 北瀚 FPGA 板子</h2>
+<p>FPGA 是一種可程式化硬體， 所以我們可以「寫程式」燒到FPGA裡面，但是要怎麼寫，又該怎麼燒呢？</p>
+<p>撰寫 FPGA 程式通常要採用「硬體描述語言」 (Hardware Description Language, HDL)，目前最常被使用的「硬體描述語言」有兩種，一種是 Verilog，另一種是 VHDL。VHDL 在學術界很常用，很多學校課堂上教授「數位電路設計」或「數位系統設計」的時候都會採用 VHDL；而 Verilog 則是在業界比較常用，而且語法相對精簡，比較不需要重複宣告，因此寫起來很輕鬆愉快，這也是筆者為何喜歡 Verilog 的原因。</p>
+<p>當我們寫好一個 Verilog 或 VHDL 程式模組的時候，通常會寫一段稱為 testbench 的測試程式，來測試該模組是否能正常運作，這個過程完全可以在電腦上執行，電腦會根據 Verilog 語法模擬電路的執行過程，不需要立刻燒錄到 FPGA 當中。</p>
+<p>舉例而言，開放原始碼的 icarus 是筆者很喜歡使用的 Verilog 模擬測試工具，以下我們就先用 icarus 這個測試工具來說明 verilog 程式的設計與測試流程。</p>
+<p>首先，讓我們先撰寫一個超級簡單的模組，並命名為 simple.v 後存檔：</p>
+<p>檔案： simple.v</p>
+<pre class="sourceCode verilog"><code class="sourceCode verilog"><span class="kw">module</span> simple(<span class="dt">input</span> clock, <span class="dt">input</span> i, <span class="dt">output</span> o);
+  <span class="kw">assign</span> o = i;
+<span class="kw">endmodule</span></code></pre>
+<p>上述模組在硬體上其實只是一條線，這條線從 i 點的輸入拉到 o 點的輸出 (雖然還有一個 clock 的參數，但是在此處並未用到，宣告 clock 的原因單純是因為我們接下來要使用的 SMIMS Instrument 工具要求模組必須有時脈 clock 才能連接，所以就多宣告了這個參數，預留給後面綁定時使用的)。</p>
+<p>接著、我們就可以另外寫一段測試主程式 (test bench)，並且命名為 simpleTest.v 後存檔:</p>
+<p>檔案： simpleTest.v</p>
+<pre class="sourceCode verilog"><code class="sourceCode verilog"><span class="ot">`include </span><span class="fl">&quot;simple.v&quot;</span>
+
+<span class="kw">module</span> main;
+<span class="dt">reg</span> clock, i;
+<span class="dt">wire</span> o;
+
+simple s1(clock, i, o);
+
+<span class="kw">initial</span> <span class="kw">begin</span>
+  <span class="dt">$monitor</span>(<span class="st">&quot;%4dns i=%b o=%b&quot;</span>, <span class="dt">$stime</span>, i, o);
+  clock = <span class="dv">0</span>;
+  i = <span class="dv">0</span>;
+  <span class="bn">#30</span> i=<span class="dv">1</span>;
+  <span class="bn">#100</span> i=<span class="dv">0</span>;
+  <span class="bn">#100</span> i=<span class="dv">1</span>;
+  <span class="bn">#100</span> <span class="dt">$finish</span>;
+<span class="kw">end</span>
+
+<span class="kw">always</span> <span class="bn">#10</span> clock=~clock;
+
+<span class="kw">endmodule</span></code></pre>
+<p>接著我們就可以用 icarus 的 iverilog 指令對 simpleTest.v 這個檔案進行編譯動作，接著再用 vvp 這個指令執行測試程式，過程如下所示：</p>
+<pre><code>D:\SMIMS\ccc\simple&gt;iverilog simpleTest.v -o simpleTest
+
+D:\SMIMS\ccc\simple&gt;vvp simpleTest
+   0ns i=0 o=0
+  30ns i=1 o=1
+ 130ns i=0 o=0
+ 230ns i=1 o=1</code></pre>
+<p>當測試完成，模擬結果沒有問題之後，就可以進一步將程式模組真正燒錄到 FPGA 板上去了，在此我們採用北瀚科技 (SMIMS) 的 「VeriLite Altera C4」 FPGA 板作為範例。</p>
+<div class="figure">
+<img src="../img/SMIMS_board.png" alt="圖、北瀚科技 (SMIMS) 的 VeriLite Altera C4 FPGA 板" /><p class="caption">圖、北瀚科技 (SMIMS) 的 VeriLite Altera C4 FPGA 板</p>
+</div>
+<p>由於北瀚科技是小廠，不像 Altera 與 Xilinx 等大廠有自己的 IC 與完整的開發工具，因此北瀚的工具必須搭配上述兩大廠的開發工具使用。</p>
+<p>目前、Xilinx 與 Altera 是 FPGA 的兩大廠商，這兩家廠商都提供了FPGA的設計開發工具，Altera 的開發工具稱為 Quartus II，Xilinx 的開發工具稱為 ISE，這兩者都提供了相當完整的工具鏈，包含 Verilog、VHDL、測試檔撰寫、模擬、燒錄、腳位設定等工具。</p>
+<p>另外、Xilinx 的 ISE 與 Altera 的 Quartus II 都提供了用圖形化設計模組的方式，設計完之後也可以產生 Verilog 與 VHDL 的程式碼，這種工具有助於學習，但是對於專家而言，直接撰寫程式會是更快速有效的方法。</p>
+<p>筆者並沒有購買 Altera Quartus II 軟體，因此使用的是免費的 Quartus II web edition，但是對於初學者而言，這個版本已經是相當好用的了。</p>
+<p>以我們上述的 VeriLite Altera C4 FPGA 板為例，我們必須先用 Altera 的 Quartus II 工具來編譯並產生 FPGA 燒錄檔，因此我們必須用 Quartus II 建立一個專案，並在建立時指定使用的 FPGA 晶片型號，相關模組等資訊，然後才能進行編譯，以下是筆者用 Quartus II 編譯 simple.v 完成時的畫面。</p>
+<div class="figure">
+<img src="../img/AlteraQuartusCompile.png" alt="圖、使用 Altera Quartus II 編譯 simple.v 模組" /><p class="caption">圖、使用 Altera Quartus II 編譯 simple.v 模組</p>
+</div>
+<p>但是、FPGA 的「程式設計」流程，與一般程式的設計流程有所不同。在寫一般程式的時候，我們會進行「撰寫、執行」或者「撰寫、編譯、執行」的流程，但是在寫 FPGA 程式的時候，還得加上「腳位綁定」與「燒錄」這兩個步驟。</p>
+<p>「腳位綁定」是將 Verilog 模組的輸出入線路，與 FPGA 上的針腳對映起來的一個動作，綁定好之後必須重新進行 FPGA 等級的完整編譯，完成之後才能進行燒錄。</p>
+<p>在 北瀚所提供的工具中，HDL Auto Assign Pin 這個工具來進行腳位的自動指定，其操作如下圖所示：</p>
+<div class="figure">
+<img src="../img/SMIMS_PinAssign1.png" alt="圖、北瀚的腳位自動綁定工具 - 步驟1" /><p class="caption">圖、北瀚的腳位自動綁定工具 - 步驟1</p>
+</div>
+<div class="figure">
+<img src="../img/SMIMS_PinAssign2.png" alt="圖、北瀚的腳位自動綁定工具 - 步驟2" /><p class="caption">圖、北瀚的腳位自動綁定工具 - 步驟2</p>
+</div>
+<div class="figure">
+<img src="../img/SMIMS_PinAssign3.png" alt="圖、北瀚的腳位自動綁定工具 - 步驟3" /><p class="caption">圖、北瀚的腳位自動綁定工具 - 步驟3</p>
+</div>
+<div class="figure">
+<img src="../img/SMIMS_PinAssign4.png" alt="圖、北瀚的腳位自動綁定工具 - 步驟4" /><p class="caption">圖、北瀚的腳位自動綁定工具 - 步驟4</p>
+</div>
+<p>如果我們在編譯時沒有指定腳位資訊，Altera Quartus II 編譯出來就不會包含燒錄檔 (*.rbf)，因此我們可以用上述北瀚 HDL Auto Assign Pin 產生的檔案 simple.qsf 將 Quartus 編譯時預設產生的 simple.qsf 檔覆蓋過去，然後重新編譯一次，這樣才會正確的指定腳位，也才能產生正確的燒錄檔 simple.rbf。</p>
+<p>(注意：最好將 北瀚 (SMIMS) 的檔案與 quartus 的檔案分開存放，否則可能會有互相覆蓋的問題)</p>
+<p>當燒錄檔 simple.rbf 檔產生之後，我們就可以透過北瀚的 VeriComm 這個工具程式，將 simple.rbf 燒到北瀚的 FPGA 板中，然後編輯輸入波形，並且繪製出實際在 FPGA 板上跑出來的波形圖，如下所示：</p>
+<div class="figure">
+<img src="../img/VeriComm.png" alt="圖、VeriComm 程式執行出來的波形圖" /><p class="caption">圖、VeriComm 程式執行出來的波形圖</p>
+</div>
+<p>我們可以透過 VeriComm 輸出的這個波形看看所設計的 Verilog 程式是否正確，這個波形已經不是模擬的結果了，而是 VeriComm 透過控制 simple.v 的輸入與時脈，實際在 FPGA 板上對每個腳位進行偵測所繪製出來的，也就是讓 simple.v 在 VeriComm 與 SMIMS Engine 晶片控制下的輸出結果。</p>
+<p>透過 VeriComm 的波形，我們會比較容易觀察所設計的電路是否正確，這也是北瀚科技比較特別的技術之所在。</p>
+<p>接著、我們還可以利用北瀚的 VeriInstrument 工具，利用視覺化的方式，做出一個互動式的「虛擬電路」。舉例而言，以下是我將 simple.v 連結到「按鈕與LED」等圖示控制項，所得到的幾個畫面。</p>
+<div class="figure">
+<img src="../img/VeriInstrumentOn.png" alt="圖、VeriComm 程式執行出來的波形圖 - 開關向上扳(通路)" /><p class="caption">圖、VeriComm 程式執行出來的波形圖 - 開關向上扳(通路)</p>
+</div>
+<div class="figure">
+<img src="../img/VeriInstrumentOff.png" alt="圖、VeriComm 程式執行出來的波形圖 - 開關向下扳(斷路)" /><p class="caption">圖、VeriComm 程式執行出來的波形圖 - 開關向下扳(斷路)</p>
+</div>
+<p>至此、我們已經用一個極度簡單的範例，大致介紹完整個 FPGA 電路的設計過程，希望能讓大家對 FPGA 的電路設計有完整的概念。當然、學習 FPGA 的過程有些是很難以文字表達的，因此筆者錄了以下這些影片，希望能幫助讀者更生動的理解整個 FPGA 的電路設計的動態過程。</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=D-sN2yndQjU">YouTube 影片：FPGA 電路設計流程:用北瀚的板子示範 1 (整體流程介紹)</a></li>
+<li><a href="https://www.youtube.com/watch?v=JDBZTwId_rM">YouTube 影片：FPGA 電路設計流程:用北瀚的板子示範 2 (icarus)</a></li>
+<li><a href="https://www.youtube.com/watch?v=9t9KOP1BaCc">YouTube 影片：FPGA 電路設計流程:用北瀚的板子示範 3 (quartus)</a></li>
+<li><a href="https://www.youtube.com/watch?v=_eRo4fxQ8no">YouTube 影片：FPGA 電路設計流程:用北瀚的板子示範 4 (pin assign)</a></li>
+<li><a href="https://www.youtube.com/watch?v=wlB9zyU6TOs">YouTube 影片：FPGA 電路設計流程:用北瀚的板子示範 5 (veriComm 波形偵測驗證)</a></li>
+<li><a href="http://youtu.be/Fs5M8fsQrTw">YouTube 影片：FPGA 電路設計流程:用北瀚的板子示範 6 (用veriInstrument 接上虛擬周邊)</a></li>
+</ul>
+<p>【本文由陳鍾誠取材並修改自 <a href="http://zh.wikipedia.org/">維基百科</a>，採用創作共用的 <a href="http://creativecommons.org/licenses/by-sa/3.0/tw/">姓名標示、相同方式分享</a> 授權】</p>
+<h1 id="程式人文集">程式人文集</h1>
+<h2 id="開放電腦計畫-13----將-mcu0-放上-fpga-執行-作者陳鍾誠">開放電腦計畫 (13) -- 將 MCU0 放上 FPGA 執行 (作者：陳鍾誠)</h2>
+<h3 id="前言-1">前言</h3>
+<p>先前我們曾經用流程式撰寫法設計過 MCU0 的迷你版與完整版，也曾經用區塊式的方法設計過 MCU0 的迷你版，這些文章列表如下：</p>
+<ul>
+<li><a href="https://dl.dropboxusercontent.com/u/101584453/pmag/201312/htm/article5.html">開放電腦計畫 (6) – 一顆只有 51 行 Verilog 程式碼的 16 位元處理器 MCU0</a></li>
+<li><a href="http://programmermagazine.github.io/201401/htm/article5.html">開放電腦計畫 (7) – 完整指令集的 16 位元處理器 MCU0s</a></li>
+<li><a href="http://programmermagazine.github.io/201407/htm/article5.html">開放電腦計畫 (12) – 使用區塊式方法設計 MCU0 的 Verilog 程式</a></li>
+</ul>
+<p>但是在這些文章中，我們都只用 icarus 去跑模擬測試，並沒有真正將 MCU0 放到 FPGA 上面跑，所以我們將在本文當中用北瀚的 FPGA 板來運行 MCU0 迷你版，讓 MCU0 真正成為「硬體」。</p>
+<h3 id="修改程式並模擬測試">修改程式並模擬測試</h3>
+<p>為了讓 MCU0 能上 FPGA 跑， 我們必須修改一些程式，主要是因為 Verilog 在模擬的時候可以跑 initial 區段，但上 FPGA 時就沒有辦法執行initial 區段，也不能用 readmemh() 讀取機器碼的十六進位檔了。</p>
+<p>因此、我們只好加上重置訊號 reset ，並將機器碼在 reset 時直接塞入記憶體中，於是整個程式改寫如下：</p>
+<p>檔案：muc0m.v</p>
+<pre class="sourceCode verilog"><code class="sourceCode verilog"><span class="ot">`define N    SW[15] </span><span class="co">// 負號旗標</span>
+<span class="ot">`define Z    SW[14] </span><span class="co">// 零旗標</span>
+<span class="ot">`define OP   IR[15:12] </span><span class="co">// 運算碼</span>
+<span class="ot">`define C    IR[11:0]  </span><span class="co">// 常數欄位</span>
+<span class="ot">`define M    {m[`C], m[`C+1]}</span>
+
+<span class="kw">module</span> mcu0m(<span class="dt">input</span> reset, <span class="dt">input</span> clock, <span class="dt">output</span> <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] A, <span class="dt">output</span> <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] IR, <span class="dt">output</span> <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] PC); 
+  <span class="dt">parameter</span> [<span class="dv">3</span>:<span class="dv">0</span>] LD=<span class="bn">4&#39;h0</span>,ADD=<span class="bn">4&#39;h1</span>,JMP=<span class="bn">4&#39;h2</span>,ST=<span class="bn">4&#39;h3</span>,CMP=<span class="bn">4&#39;h4</span>,JEQ=<span class="bn">4&#39;h5</span>;
+  <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] SW;  <span class="co">// 狀態暫存器</span>
+  <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] pc0;
+  <span class="dt">reg</span> [<span class="dv">7</span>:<span class="dv">0</span>]  m [<span class="dv">0</span>:<span class="dv">32</span>];   <span class="co">// 內部的記憶體</span>
+  
+  <span class="kw">always</span> @(<span class="kw">posedge</span> clock <span class="dt">or</span> <span class="kw">posedge</span> reset) <span class="kw">begin</span> 
+    <span class="kw">if</span> (reset) <span class="kw">begin</span>
+      PC = <span class="dv">0</span>;
+      SW = <span class="dv">0</span>;       
+      {m[<span class="dv">0</span>],m[<span class="dv">1</span>]}   = <span class="bn">16&#39;h0016</span>;  <span class="co">// 00    LOOP:   LD    I    </span>
+      {m[<span class="dv">2</span>],m[<span class="dv">3</span>]}   = <span class="bn">16&#39;h401A</span>;  <span class="co">// 02            CMP   K10  </span>
+      {m[<span class="dv">4</span>],m[<span class="dv">5</span>]}   = <span class="bn">16&#39;h5012</span>;  <span class="co">// 04            JEQ   EXIT</span>
+      {m[<span class="dv">6</span>],m[<span class="dv">7</span>]}   = <span class="bn">16&#39;h1018</span>;  <span class="co">// 06            ADD   K1   </span>
+      {m[<span class="dv">8</span>],m[<span class="dv">9</span>]}   = <span class="bn">16&#39;h3016</span>;  <span class="co">// 08            ST    I    </span>
+      {m[<span class="dv">10</span>],m[<span class="dv">11</span>]} = <span class="bn">16&#39;h0014</span>;  <span class="co">// 0A            LD    SUM  </span>
+      {m[<span class="dv">12</span>],m[<span class="dv">13</span>]} = <span class="bn">16&#39;h1016</span>;  <span class="co">// 0C            ADD   I    </span>
+      {m[<span class="dv">14</span>],m[<span class="dv">15</span>]} = <span class="bn">16&#39;h3014</span>;  <span class="co">// 0E            ST    SUM  </span>
+      {m[<span class="dv">16</span>],m[<span class="dv">17</span>]} = <span class="bn">16&#39;h2000</span>;  <span class="co">// 10            JMP   LOOP</span>
+      {m[<span class="dv">18</span>],m[<span class="dv">19</span>]} = <span class="bn">16&#39;h2012</span>;  <span class="co">// 12    EXIT:   JMP   EXIT</span>
+      {m[<span class="dv">20</span>],m[<span class="dv">21</span>]} = <span class="bn">16&#39;h0000</span>;  <span class="co">// 14    SUM:    WORD  0    </span>
+      {m[<span class="dv">22</span>],m[<span class="dv">23</span>]} = <span class="bn">16&#39;h0000</span>;  <span class="co">// 16    I:      WORD  0    </span>
+      {m[<span class="dv">24</span>],m[<span class="dv">25</span>]} = <span class="bn">16&#39;h0001</span>;  <span class="co">// 18    K1:     WORD  1    </span>
+      {m[<span class="dv">26</span>],m[<span class="dv">27</span>]} = <span class="bn">16&#39;h000A</span>;  <span class="co">// 1A    K10:    WORD  10            </span>
+    <span class="kw">end</span> <span class="kw">else</span> <span class="kw">begin</span>
+      IR = {m[PC], m[PC<span class="dv">+1</span>]};  <span class="co">// 指令擷取階段：IR=m[PC], 2 個 Byte 的記憶體</span>
+      pc0= PC;                <span class="co">// 儲存舊的 PC 值在 pc0 中。</span>
+      PC = PC<span class="dv">+2</span>;              <span class="co">// 擷取完成，PC 前進到下一個指令位址</span>
+      <span class="kw">case</span> (<span class="ot">`OP</span>)              <span class="co">// 解碼、根據 OP 執行動作</span>
+        <span class="dv">LD:</span> A = <span class="ot">`M</span>;           <span class="co">// LD C</span>
+        <span class="dv">ST:</span> <span class="ot">`M</span> = A;           <span class="co">// ST C</span>
+        <span class="dv">CMP:</span> <span class="kw">begin</span> <span class="ot">`N</span>=(A &lt; <span class="ot">`M</span>); <span class="ot">`Z</span>=(A==<span class="ot">`M</span>); <span class="kw">end</span> <span class="co">// CMP C</span>
+        <span class="dv">ADD:</span> A = A + <span class="ot">`M</span>;      <span class="co">// ADD C</span>
+        <span class="dv">JMP:</span> PC = <span class="ot">`C</span>;         <span class="co">// JMP C</span>
+        <span class="dv">JEQ:</span> <span class="kw">if</span> (<span class="ot">`Z</span>) PC=<span class="ot">`C</span>;   <span class="co">// JEQ C</span>
+      <span class="kw">endcase</span>
+      <span class="co">// 印出 PC, IR, SW, A 等暫存器值以供觀察</span>
+      <span class="dt">$display</span>(<span class="st">&quot;%4dns PC=%x IR=%x, SW=%x, A=%d&quot;</span>, <span class="dt">$stime</span>, pc0, IR, SW, A); 
+     <span class="kw">end</span>
+  <span class="kw">end</span>
+<span class="kw">endmodule</span></code></pre>
+<p>先前我們通常將「模組與測試程式」寫在一起，但是為了放上 FPGA，我們決定把「模組與測試程式」分開，然後在測試程式當中用 include 的方式引用模組。</p>
+<p>檔案：mcu0mTest.v</p>
+<pre class="sourceCode verilog"><code class="sourceCode verilog"><span class="ot">`include </span><span class="fl">&quot;mcu0m.v&quot;</span>
+
+<span class="kw">module</span> main;                <span class="co">// 測試程式開始</span>
+<span class="dt">reg</span> clock, reset;           
+<span class="dt">wire</span> [<span class="dv">15</span>:<span class="dv">0</span>] A, IR, PC, SW;
+mcu0 mcu(reset, clock, A, IR, PC);   <span class="co">// 宣告 cpu0mc 處理器</span>
+
+<span class="kw">initial</span> <span class="kw">begin</span> 
+  clock = <span class="dv">0</span>;          <span class="co">// 一開始 clock 設定為 0</span>
+  <span class="bn">#10</span>;
+  reset = <span class="dv">1</span>;
+  <span class="bn">#30</span>;
+  reset = <span class="dv">0</span>;
+<span class="kw">end</span>
+<span class="kw">always</span> <span class="bn">#10</span> clock=~clock;   <span class="co">// 每隔 10ns 反相，時脈週期為 20ns</span>
+<span class="kw">initial</span> <span class="bn">#2000</span> <span class="dt">$finish</span>;     <span class="co">// 在 2000 奈秒的時候停止測試。</span>
+<span class="kw">endmodule</span></code></pre>
+<p>接著、讓我們用 icarus 測試看看這個程式的運作是否正常，測試過程如下：</p>
+<pre><code>D:\SMIMS\ccc\mcu0m\icarus&gt;iverilog mcu0mTest.v -o mcu0mTest
+
+D:\SMIMS\ccc\mcu0m\icarus&gt;vvp mcu0mTest
+  50ns PC=0000 IR=0016, SW=0000, A=    0
+  70ns PC=0002 IR=401a, SW=8000, A=    0
+  90ns PC=0004 IR=5012, SW=8000, A=    0
+ 110ns PC=0006 IR=1018, SW=8000, A=    1
+ 130ns PC=0008 IR=3016, SW=8000, A=    1
+ 150ns PC=000a IR=0014, SW=8000, A=    0
+ 170ns PC=000c IR=1016, SW=8000, A=    1
+ 190ns PC=000e IR=3014, SW=8000, A=    1
+ 210ns PC=0010 IR=2000, SW=8000, A=    1
+ 230ns PC=0000 IR=0016, SW=8000, A=    1
+ 250ns PC=0002 IR=401a, SW=8000, A=    1
+ 270ns PC=0004 IR=5012, SW=8000, A=    1
+ 290ns PC=0006 IR=1018, SW=8000, A=    2
+ 310ns PC=0008 IR=3016, SW=8000, A=    2
+ 330ns PC=000a IR=0014, SW=8000, A=    1
+ 350ns PC=000c IR=1016, SW=8000, A=    3
+ 370ns PC=000e IR=3014, SW=8000, A=    3
+ 390ns PC=0010 IR=2000, SW=8000, A=    3
+ 410ns PC=0000 IR=0016, SW=8000, A=    2
+ 430ns PC=0002 IR=401a, SW=8000, A=    2
+ 450ns PC=0004 IR=5012, SW=8000, A=    2
+ 470ns PC=0006 IR=1018, SW=8000, A=    3
+ 490ns PC=0008 IR=3016, SW=8000, A=    3
+ 510ns PC=000a IR=0014, SW=8000, A=    3
+ 530ns PC=000c IR=1016, SW=8000, A=    6
+ 550ns PC=000e IR=3014, SW=8000, A=    6
+ 570ns PC=0010 IR=2000, SW=8000, A=    6
+ 590ns PC=0000 IR=0016, SW=8000, A=    3
+ 610ns PC=0002 IR=401a, SW=8000, A=    3
+ 630ns PC=0004 IR=5012, SW=8000, A=    3
+ 650ns PC=0006 IR=1018, SW=8000, A=    4
+ 670ns PC=0008 IR=3016, SW=8000, A=    4
+ 690ns PC=000a IR=0014, SW=8000, A=    6
+ 710ns PC=000c IR=1016, SW=8000, A=   10
+ 730ns PC=000e IR=3014, SW=8000, A=   10
+ 750ns PC=0010 IR=2000, SW=8000, A=   10
+ 770ns PC=0000 IR=0016, SW=8000, A=    4
+ 790ns PC=0002 IR=401a, SW=8000, A=    4
+ 810ns PC=0004 IR=5012, SW=8000, A=    4
+ 830ns PC=0006 IR=1018, SW=8000, A=    5
+ 850ns PC=0008 IR=3016, SW=8000, A=    5
+ 870ns PC=000a IR=0014, SW=8000, A=   10
+ 890ns PC=000c IR=1016, SW=8000, A=   15
+ 910ns PC=000e IR=3014, SW=8000, A=   15
+ 930ns PC=0010 IR=2000, SW=8000, A=   15
+ 950ns PC=0000 IR=0016, SW=8000, A=    5
+ 970ns PC=0002 IR=401a, SW=8000, A=    5
+ 990ns PC=0004 IR=5012, SW=8000, A=    5
+1010ns PC=0006 IR=1018, SW=8000, A=    6
+1030ns PC=0008 IR=3016, SW=8000, A=    6
+1050ns PC=000a IR=0014, SW=8000, A=   15
+1070ns PC=000c IR=1016, SW=8000, A=   21
+1090ns PC=000e IR=3014, SW=8000, A=   21
+1110ns PC=0010 IR=2000, SW=8000, A=   21
+1130ns PC=0000 IR=0016, SW=8000, A=    6
+1150ns PC=0002 IR=401a, SW=8000, A=    6
+1170ns PC=0004 IR=5012, SW=8000, A=    6
+1190ns PC=0006 IR=1018, SW=8000, A=    7
+1210ns PC=0008 IR=3016, SW=8000, A=    7
+1230ns PC=000a IR=0014, SW=8000, A=   21
+1250ns PC=000c IR=1016, SW=8000, A=   28
+1270ns PC=000e IR=3014, SW=8000, A=   28
+1290ns PC=0010 IR=2000, SW=8000, A=   28
+1310ns PC=0000 IR=0016, SW=8000, A=    7
+1330ns PC=0002 IR=401a, SW=8000, A=    7
+1350ns PC=0004 IR=5012, SW=8000, A=    7
+1370ns PC=0006 IR=1018, SW=8000, A=    8
+1390ns PC=0008 IR=3016, SW=8000, A=    8
+1410ns PC=000a IR=0014, SW=8000, A=   28
+1430ns PC=000c IR=1016, SW=8000, A=   36
+1450ns PC=000e IR=3014, SW=8000, A=   36
+1470ns PC=0010 IR=2000, SW=8000, A=   36
+1490ns PC=0000 IR=0016, SW=8000, A=    8
+1510ns PC=0002 IR=401a, SW=8000, A=    8
+1530ns PC=0004 IR=5012, SW=8000, A=    8
+1550ns PC=0006 IR=1018, SW=8000, A=    9
+1570ns PC=0008 IR=3016, SW=8000, A=    9
+1590ns PC=000a IR=0014, SW=8000, A=   36
+1610ns PC=000c IR=1016, SW=8000, A=   45
+1630ns PC=000e IR=3014, SW=8000, A=   45
+1650ns PC=0010 IR=2000, SW=8000, A=   45
+1670ns PC=0000 IR=0016, SW=8000, A=    9
+1690ns PC=0002 IR=401a, SW=8000, A=    9
+1710ns PC=0004 IR=5012, SW=8000, A=    9
+1730ns PC=0006 IR=1018, SW=8000, A=   10
+1750ns PC=0008 IR=3016, SW=8000, A=   10
+1770ns PC=000a IR=0014, SW=8000, A=   45
+1790ns PC=000c IR=1016, SW=8000, A=   55
+1810ns PC=000e IR=3014, SW=8000, A=   55
+1830ns PC=0010 IR=2000, SW=8000, A=   55
+1850ns PC=0000 IR=0016, SW=8000, A=   10
+1870ns PC=0002 IR=401a, SW=4000, A=   10
+1890ns PC=0004 IR=5012, SW=4000, A=   10
+1910ns PC=0012 IR=2012, SW=4000, A=   10
+1930ns PC=0012 IR=2012, SW=4000, A=   10
+1950ns PC=0012 IR=2012, SW=4000, A=   10
+1970ns PC=0012 IR=2012, SW=4000, A=   10
+1990ns PC=0012 IR=2012, SW=4000, A=   10</code></pre>
+<p>您可以看到上述的測試結果中，1+2+...+10 的結果 55 正確的被計算出來了。</p>
+<h3 id="放上-fpga-實際執行">放上 FPGA 實際執行</h3>
+<p>接著、就讓我們將程式放到北瀚科技 (SMIMS) 的 「VeriLite Altera C4」 FPGA 板上去執行，以下是該 FPGA 板的樣子。</p>
+<div class="figure">
+<img src="../img/SMIMS_board.png" alt="圖、北瀚科技 (SMIMS) 的 VeriLite Altera C4 FPGA 板" /><p class="caption">圖、北瀚科技 (SMIMS) 的 VeriLite Altera C4 FPGA 板</p>
+</div>
+<p>由於北瀚的開發工具必須搭配 Altera 的 Quartus II 使用，所以我們必須先將 mcu0m.v 先用 Quartus II 建立專案並且編譯過之後，才能用北瀚的 VeriComm 工具進行燒錄與執行監控等任務，以下是我們用 Quartus II 編譯時的畫面。</p>
+<div class="figure">
+<img src="../img/mcu0m_quartus2.png" />
+</div>
+<p>接著我們用北瀚的 HDL Auto Assign Pin 工具產生腳位綁定檔，以下是腳位綁定時的一個畫面。</p>
+<div class="figure">
+<img src="../img/mcu0m_pinassign.png" />
+</div>
+<p>然後我們將產生的 mcu0m.qsf 檔案複製到 Quartus II 專案中，重新編譯過即可產生燒錄檔 mcu0m.rbf 檔。</p>
+<p>接著開啟 VeriComm 並進行燒錄，可以看到該 FPGA 在 VeriComm 監控模式下輸出的波形圖如下。</p>
+<div class="figure">
+<img src="../img/mcu0m_wave.png" />
+</div>
+<p>您可以看到該畫面中正確的計算出 1+2+...+10 = 55 的結果，這代表我們的 mcu0m 模組確實可以放上 FPGA 並且正確的運作了。</p>
+<h3 id="結語">結語</h3>
+<p>必須注意的是，北瀚的 HDL Auto Assign Pin 由於是他們自己寫的一個簡易 Verilog 剖析器，並沒有支援完整的 Verilog 語法，因此在剖析 mcu0m.v 時有失敗的情況，因此筆者將 mcu0m.v 的內容全部刪除之後才交給 HDL Auto Assign Pin 剖析，如此就能正確產生腳位對應檔。</p>
+<p>(或許北瀚應該考慮改用 icarus 的剖析器，這樣應該就不用自己辛苦的寫剖析器，也可以支援完整的語法了)</p>
+<p>上述編譯、燒錄與執行過程還算蠻漫長的，所以筆者將自己的操作過程錄影了下來，如果本文描述還有不清楚的地方，可以進一步參考下列影片。</p>
+<ul>
+<li><a href="http://youtu.be/BXoOSgG_j18">YouTube 影片：開放電腦計畫 - 將 MCU0m 放上北瀚的 FPGA 板執行</a></li>
+</ul>
+<p>【本文由陳鍾誠取材並修改自 <a href="http://zh.wikipedia.org/">維基百科</a>，採用創作共用的 <a href="http://creativecommons.org/licenses/by-sa/3.0/tw/">姓名標示、相同方式分享</a> 授權】</p>
+<h2 id="從-arduino-到-avr-晶片3----timers-作者cooper-maa">從 Arduino 到 AVR 晶片(3) -- Timers (作者：Cooper Maa)</h2>
+<h3 id="timers-簡介">Timers 簡介</h3>
+<p>簡單地說，Timer 是計時器，可以用來量時間。</p>
+<p>來自石英振盪器脈衝 (pulse) 每一個 clock 會來一次，Timer 的內容會跟著計數遞增。所以，如果使用的是 16 MHz 的振盪器，Timer 的內容會每 62.5 ns (奈秒) 改變一次。</p>
+<p>根據解析度的不同，Timer 通常有 8-bit 和 16-bit 兩種。如果是 8-bit Timer，那麼可以寫入的最大數值是 255 (16-bit 的話是 65535)，假如超過了最大數值，Timer 就會自動 reset 為 0，這種情況稱為溢位 (overflow)。Timer overflow 的時候可以引發中斷，如果啟用了 Timer overflow 中斷，那麼你就必須在程式裏提供 ISR 處理中斷。</p>
+<p>Timer 也可以當成一般的計數器 (Counter) 使用，或者是做 PWM 訊號輸出以及捕捉外部脈衝寬度 (Input Capture)。</p>
+<h3 id="prescaler">Prescaler</h3>
+<p>Prescaler (預除器) 是一個用來提供 clock 給 Timer 的電路。如你所知，CPU clock 頻率通常是 1 MHz, 8 MHz, 16 MHz，而 Precaler 的用途則是除頻。</p>
+<p>AVR 晶片的 Precaler 大部份都有提供底下這些選項:</p>
+<ul>
+<li>No Clock Source (停止 Timer)</li>
+<li>No Prescaling (clock = CPU clock)</li>
+<li>CPU clock / 8</li>
+<li>CPU clock / 64</li>
+<li>CPU clock /256</li>
+<li>CPU clock /1024</li>
+</ul>
+<p>Timer 也可以使用外部的 clock，這樣的話，Timer 就變成 Counter (計數器)了。</p>
+<h3 id="timer-registers">Timer Registers</h3>
+<p>ATmega328 有 3 個 Timer/Counters:</p>
+<ul>
+<li>1 個 8-bit Timer/Counters: Timer0 和 Timer2</li>
+<li>1 個 16-bit Timer/Counter: Timer1</li>
+</ul>
+<p>底下以 Timer0 為例簡介 Timer 的幾個主要暫存器。</p>
+<p>首先是 TCCRxA – Timer/Counter Control Register A (x 代表 0, 1 或 2):</p>
+<div class="figure">
+<img src="../img/arduinoTimer1.png" />
+</div>
+<p>TCCRxA 暫存器主要是用來設定 Timer 的模式，例如 PWM 輸出等進階的功能。一般來說，如果沒用到 PWM，只是要單純的 Timer/Counter 功能的話，那麼把 TCCR0A 暫存器設定成 0x00 就行了。</p>
+<p>接著是 TCCRxB – Timer/Counter Control Register B:</p>
+<div class="figure">
+<img src="../img/arduinoTimer2.png" />
+</div>
+<p>TCCR0B 暫存器主要是用來設定 clock source。比較重要的是 CS02 CS01 和 CS00 這三個位元，這三個元位就是用來選擇 clock 的:</p>
+<div class="figure">
+<img src="../img/arduinoTimerTable.png" alt="▲ 註:Timer2 比較特別，有不一樣的 Prescale 設定，請參考 Datasheet" /><p class="caption">▲ 註:Timer2 比較特別，有不一樣的 Prescale 設定，請參考 Datasheet</p>
+</div>
+<p>再來是 TCNTx – Timer/Counter Register:</p>
+<div class="figure">
+<img src="../img/arduinoTimer3.png" />
+</div>
+<p>TCNTx 暫存器比較簡單，它就是 Timer 的計數器。</p>
+<p>最後是 TIMSKx – Timer/Counter Interrupt Mask Register:</p>
+<div class="figure">
+<img src="../img/arduinoTimer4.png" />
+</div>
+<p>TIMSKx 暫存器主要是用來啟用或停用 Timer0 的中斷，透過 TOIE0 這個位元 (Timer/Counter0 Overflow Interrupt Enable)。假如是 Timer1 的話，便是 TIMSK1 暫存器的 TOIE1 這個位元，Timer2 的話是 TIMSK2 的 TOIE2 位元。</p>
+<p>【本文作者為馬萬圳，原文網址為： <a href="http://coopermaa2nd.blogspot.tw/2011/07/4-timers.html">http://coopermaa2nd.blogspot.tw/2011/07/4-timers.html</a> ，由陳鍾誠編輯後納入本雜誌】</p>
+<h2 id="泰勒级数-taylor-series-作者bridan">泰勒级数 (Taylor series) (作者：Bridan)</h2>
+<p>許多代數式都可以表示為</p>
+<div class="figure">
+<img src="../timg/df056c5ad9fd.jpg" />
+</div>
+<p>這稱之為 <a href="http://zh.wikipedia.org/wiki/%E6%B3%B0%E5%8B%92%E7%BA%A7%E6%95%B0">泰勒級數</a> 展開，如果 a = 0，則改稱為馬克勞林級數展開 (Maclaurin series)</p>
+<div class="figure">
+<img src="../timg/ef2c672198ef.jpg" />
+</div>
+<p>如果缺少了這些級數展開，許多電腦數學函數就會計算不出來，在對數一文有一計算式</p>
+<div class="figure">
+<img src="../timg/385bddf9dc34.jpg" />
+</div>
+<p>其實它就是一種級數展開，如果電腦要計算三角函數或自然指數，就需要下列算式求值</p>
+<div class="figure">
+<img src="../timg/ae5d9c617079.jpg" />
+</div>
+<div class="figure">
+<img src="../timg/59d41e5cd043.jpg" />
+</div>
+<div class="figure">
+<img src="../timg/dac451480515.jpg" />
+</div>
+<div class="figure">
+<img src="../timg/de38468ec1ee.jpg" />
+</div>
+<p>如果想計算任意值 u 求其任意次方 y，可令</p>
+<div class="figure">
+<img src="../timg/220f16370401.jpg" />
+</div>
+<div class="figure">
+<img src="../timg/c7d547d027e6.jpg" />
+</div>
+<p>再求解級數和</p>
+<p>(本文來自「研發養成所」 Bridan 的網誌，原文網址為 <a href="http://4rdp.blogspot.tw/2014/07/taylor-series.html">http://4rdp.blogspot.tw/2014/07/taylor-series.html</a> ，由陳鍾誠編輯後納入程式人雜誌)</p>
+<h2 id="visual-basic-6.0-利用-webbrowser-寫-html-網頁預覽器-作者廖憲得-0xde">[Visual Basic 6.0] 利用 WebBrowser 寫 Html 網頁預覽器 (作者：廖憲得 0xde)</h2>
+<p>首先該如何叫出 WebBrowser 瀏覽器元件呢?</p>
+<div class="figure">
+<img src="../img/VB1.jpg" />
+</div>
+<p>專案 =&gt; 設定使用元件 找到 &quot;Microsoft Internet Controls&quot; 打勾 =&gt; 確定</p>
+<div class="figure">
+<img src="../img/VB2.jpg" />
+</div>
+<p>簡單的 WebBrowser 基礎程式碼</p>
+<pre class="sourceCode monobasic"><code class="sourceCode monobasic">上一頁 WebBrowser1.GoBack 
+下一頁 WebBrowser1.GoForward 
+瀏覽網址 WebBrowser1.Navigate (<span class="st">&quot;網址&quot;</span>) 
+重新整理 WebBrowser1.Refresh 
+搜索 WebBrowser1.GoSearch 
+停止 WebBrowser1.Stop </code></pre>
+<p>※當出現錯誤訊息：(找不到檔: 'C:32.dll')</p>
+<div class="figure">
+<img src="../img/VB3.jpg" />
+</div>
+<p>將以下 Code 用記事本填入，並另存新檔為 XXX.reg (登錄檔)</p>
+<pre class="sourceCode monobasic"><code class="sourceCode monobasic">Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\TypeLib\{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}]
+
+[HKEY_CLASSES_ROOT\TypeLib\{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}\1.1]
+@=<span class="st">&quot;Microsoft Internet Controls&quot;</span>
+
+[HKEY_CLASSES_ROOT\TypeLib\{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}\1.1\0]
+
+[HKEY_CLASSES_ROOT\TypeLib\{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}\1.1\0\win32]
+@=<span class="st">&quot;C:</span>\\<span class="st">WINDOWS</span>\\<span class="st">system32</span>\\<span class="st">ieframe.dll&quot;</span></code></pre>
+<div class="figure">
+<img src="../img/VB4.jpg" />
+</div>
+<div class="figure">
+<img src="../img/VB5.jpg" />
+</div>
+<p>登錄即可。</p>
+<div class="figure">
+<img src="../img/VB7.jpg" />
+</div>
+<p>Html 網頁預覽器</p>
+<pre class="sourceCode monobasic"><code class="sourceCode monobasic"><span class="kw">Private</span> <span class="kw">Sub </span>HtmlTxt_Change()
+Open App.Path &amp; <span class="st">&quot;/Html.htm&quot;</span> <span class="kw">For </span>Output <span class="kw">As</span> #1
+
+Print #1, HtmlTxt
+
+WebBrowserHtml.Navigate App.Path &amp; <span class="st">&quot;/Html.htm&quot;</span>
+Close
+<span class="kw">End Sub</span></code></pre>
+<ol style="list-style-type: decimal">
+<li>在表單上放置一個 WebBrowser 並且將它重新命名為 WebBrowserHtml</li>
+<li>在表單上放置一個 TextBox 並且將它重新命名為 HtmlTxt</li>
+</ol>
+<ul>
+<li>檔案下載：<a href="http://files.dotblogs.com.tw/0xde/1311/20131112144644418.rar">WebBrowser Html 預覽器.rar</a></li>
+</ul>
+<p>【本文作者為「廖憲得」，原文網址為： <a href="http://www.dotblogs.com.tw/0xde/archive/2013/11/12/127829.aspx">http://www.dotblogs.com.tw/0xde/archive/2013/11/12/127829.aspx</a> ，由陳鍾誠編輯後納入本雜誌】</p>
+<h1 id="雜誌訊息">雜誌訊息</h1>
+<h2 id="讀者訂閱">讀者訂閱</h2>
+<p>程式人雜誌是一個結合「開放原始碼與公益捐款活動」的雜誌，簡稱「開放公益雜誌」。開放公益雜誌本著「讀書做善事、寫書做公益」的精神，我們非常歡迎程式人認養專欄、或者捐出您的網誌，如果您願意成為本雜誌的專欄作家，請加入 <a href="https://www.facebook.com/groups/programmerMagazine/">程式人雜誌社團</a> 一同共襄盛舉。</p>
+<p>我們透過發行這本雜誌，希望讓大家可以讀到想讀的書，學到想學的技術，同時也讓寫作的朋友的作品能產生良好價值 – 那就是讓讀者根據雜誌的價值捐款給慈善團體。 讀雜誌做公益也不需要有壓力，您不需要每讀一本就急著去捐款，您可以讀了十本再捐，或者使用固定的月捐款方式，當成是雜誌訂閱費，或者是季捐款、一年捐一次等都 OK ! 甚至是單純當個讀者我們也都很歡迎！</p>
+<p>本雜誌每期參考價：NT 50 元，如果您喜歡本雜誌，請將書款捐贈公益團體。例如可捐贈給「羅慧夫顱顏基金會 彰化銀行(009) 帳號：5234-01-41778-800」。(若匯款要加註可用「程式人雜誌」五個字)</p>
+<h2 id="投稿須知">投稿須知</h2>
+<p><em>給專欄寫作者：</em> 做公益不需要有壓力。如果您願意撰寫專欄，您可以輕鬆的寫，如果當月的稿件出不來，我們會安排其他稿件上場。</p>
+<p><em>給網誌捐贈者：</em> 如果您沒時間寫專欄或投稿，沒關係，只要將您的網誌以 [創作共用的「姓名標示、非商業性、相同方式分享」授權] 並通知我們，我們會自動從中選取需要的文章進行編輯，放入適當的雜誌當中出刊。</p>
+<p><em>給文章投稿者：</em> 程式人雜誌非常歡迎您加入作者的行列，如果您想撰寫任何文章或投稿，請用 markdown 或 LibreOffice 編輯好您的稿件，並於每個月 25 日前投稿到<a href="https://www.facebook.com/groups/programmerMagazine/">程式人雜誌社團</a> 的檔案區，我們會盡可能將稿件編入隔月1號出版程式人雜誌當中，也歡迎您到社團中與我們一同討論。</p>
+<p>如果您要投稿給程式人雜誌，我們最希望的格式是採用 markdown 的格式撰寫，然後將所有檔按壓縮為 zip 上傳到社團檔案區給我們， 如您想學習 markdown 的撰寫出版方式，可以參考 <a href="https://dl.dropboxusercontent.com/u/101584453/pmag/201304/htm/video1.html">看影片學 markdown 編輯出版流程</a> 一文。</p>
+<p>如果您無法採用 markdown 的方式撰寫，也可以直接給我們您的稿件，像是 MS. Word 的 doc 檔或 LibreOffice 的 odt 檔都可以，我們 會將這些稿件改寫為 markdown 之後編入雜誌當中。</p>
+<h2 id="參與編輯">參與編輯</h2>
+<p>您也可以擔任程式人雜誌的編輯，甚至創造一個全新的公益雜誌，我們誠摯的邀請您加入「開放公益出版」的行列，如果您想擔任編輯或創造新雜誌，也歡迎到 <a href="https://www.facebook.com/groups/programmerMagazine/">程式人雜誌社團</a> 來與我們討論相關事宜。</p>
+<h2 id="公益資訊">公益資訊</h2>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="20%" />
+<col width="28%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">公益團體</th>
+<th align="left">聯絡資訊</th>
+<th align="left">服務對象</th>
+<th align="left">捐款帳號</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">財團法人羅慧夫顱顏基金會</td>
+<td align="left"><a href="http://www.nncf.org/">http://www.nncf.org/</a> <BR/> <script type="text/javascript">
+<!--
+h='&#110;&#110;&#x63;&#102;&#46;&#x6f;&#114;&#x67;';a='&#64;';n='&#108;&#x79;&#110;&#110;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#108;&#x79;&#110;&#110;&#32;&#x61;&#116;&#32;&#110;&#110;&#x63;&#102;&#32;&#100;&#x6f;&#116;&#32;&#x6f;&#114;&#x67;</noscript> <BR/> 02-27190408分機 232</td>
+<td align="left">顱顏患者 (如唇顎裂、小耳症或其他罕見顱顏缺陷）</td>
+<td align="left">銀行：009彰化銀行民生分行<BR/> 帳號：5234-01-41778-800</td>
+</tr>
+<tr class="even">
+<td align="left">社團法人台灣省兒童少年成長協會</td>
+<td align="left"><a href="http://www.cyga.org/">http://www.cyga.org/</a> <BR/> <script type="text/javascript">
+<!--
+h='&#x67;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x63;&#x79;&#x67;&#x61;&#x39;&#x39;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x63;&#x79;&#x67;&#x61;&#x39;&#x39;&#32;&#x61;&#116;&#32;&#x67;&#x6d;&#x61;&#x69;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;</noscript> <BR/> 04-23058005</td>
+<td align="left">單親、隔代教養.弱勢及一般家庭之兒童青少年</td>
+<td align="left">銀行：新光銀行 <BR/> 戶名：台灣省兒童少年成長協會 <BR/> 帳號：103-0912-10-000212-0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="footer">
+<a href="https://www.facebook.com/groups/programmerMagazine/">程式人雜誌</a> ，採用 <a href="http://creativecommons.org/licenses/by-sa/3.0/tw/ ">創作共用：姓名標示、相同方式分享</a> 授權，歡迎加入 <a href="https://www.facebook.com/groups/programmerMagazine/">雜誌社團</a>
+</div>
+</body>
+</html>

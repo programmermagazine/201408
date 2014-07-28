@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../css/pmag.css" type="text/css" />
+</head>
+<body>
+<div id="header_wrap">
+   <h1><a href="https://www.facebook.com/groups/programmerMagazine">程式人雜誌</a> <sub> --  <a href="http://programmermagazine.github.io/201408/htm/home.html">2014 年 8 月號</a> (開放公益出版品)</sub></h1>
+</div>
+<div id="content">
+<div id="TOC">
+<ul>
+<li><a href="#開放電腦計畫-13----將-mcu0-放上-fpga-執行">開放電腦計畫 (13) -- 將 MCU0 放上 FPGA 執行</a></li>
+</ul>
+</div>
+<h2 id="開放電腦計畫-13----將-mcu0-放上-fpga-執行">開放電腦計畫 (13) -- 將 MCU0 放上 FPGA 執行</h2>
+<h3 id="前言">前言</h3>
+<p>先前我們曾經用流程式撰寫法設計過 MCU0 的迷你版與完整版，也曾經用區塊式的方法設計過 MCU0 的迷你版，這些文章列表如下：</p>
+<ul>
+<li><a href="https://dl.dropboxusercontent.com/u/101584453/pmag/201312/htm/article5.html">開放電腦計畫 (6) – 一顆只有 51 行 Verilog 程式碼的 16 位元處理器 MCU0</a></li>
+<li><a href="http://programmermagazine.github.io/201401/htm/article5.html">開放電腦計畫 (7) – 完整指令集的 16 位元處理器 MCU0s</a></li>
+<li><a href="http://programmermagazine.github.io/201407/htm/article5.html">開放電腦計畫 (12) – 使用區塊式方法設計 MCU0 的 Verilog 程式</a></li>
+</ul>
+<p>但是在這些文章中，我們都只用 icarus 去跑模擬測試，並沒有真正將 MCU0 放到 FPGA 上面跑，所以我們將在本文當中用北瀚的 FPGA 版來運行 MCU0 迷你版，讓 MCU0 真正成為「硬體」。</p>
+<h3 id="修改程式並模擬測試">修改程式並模擬測試</h3>
+<p>為了讓 MCU0 能上 FPGA 跑， 我們必須修改一些程式，主要是因為 Verilog 在模擬的時候可以跑 initial 區段，但上 FPGA 時就沒有辦法執行initial 區段，也沒有用 readmemh() 辦法讀取機器碼的十六進位檔了。</p>
+<p>因此、我們只好加上重置訊號 reset ，並將機器碼在 reset 時直接塞入記憶體中，於是整個程式改寫如下：</p>
+<p>檔案：muc0m.v</p>
+<pre class="sourceCode verilog"><code class="sourceCode verilog"><span class="ot">`define N    SW[15] </span><span class="co">// 負號旗標</span>
+<span class="ot">`define Z    SW[14] </span><span class="co">// 零旗標</span>
+<span class="ot">`define OP   IR[15:12] </span><span class="co">// 運算碼</span>
+<span class="ot">`define C    IR[11:0]  </span><span class="co">// 常數欄位</span>
+<span class="ot">`define M    {m[`C], m[`C+1]}</span>
+
+<span class="kw">module</span> mcu0m(<span class="dt">input</span> reset, <span class="dt">input</span> clock, <span class="dt">output</span> <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] A, <span class="dt">output</span> <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] IR, <span class="dt">output</span> <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] PC); 
+  <span class="dt">parameter</span> [<span class="dv">3</span>:<span class="dv">0</span>] LD=<span class="bn">4&#39;h0</span>,ADD=<span class="bn">4&#39;h1</span>,JMP=<span class="bn">4&#39;h2</span>,ST=<span class="bn">4&#39;h3</span>,CMP=<span class="bn">4&#39;h4</span>,JEQ=<span class="bn">4&#39;h5</span>;
+  <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] SW;  <span class="co">// 狀態暫存器</span>
+  <span class="dt">reg</span> [<span class="dv">15</span>:<span class="dv">0</span>] pc0;
+  <span class="dt">reg</span> [<span class="dv">7</span>:<span class="dv">0</span>]  m [<span class="dv">0</span>:<span class="dv">32</span>];   <span class="co">// 內部的記憶體</span>
+  
+  <span class="kw">always</span> @(<span class="kw">posedge</span> clock <span class="dt">or</span> <span class="kw">posedge</span> reset) <span class="kw">begin</span> 
+    <span class="kw">if</span> (reset) <span class="kw">begin</span>
+      PC = <span class="dv">0</span>;
+      SW = <span class="dv">0</span>;       
+      {m[<span class="dv">0</span>],m[<span class="dv">1</span>]}   = <span class="bn">16&#39;h0016</span>;  <span class="co">// 00    LOOP:   LD    I    </span>
+      {m[<span class="dv">2</span>],m[<span class="dv">3</span>]}   = <span class="bn">16&#39;h401A</span>;  <span class="co">// 02            CMP   K10  </span>
+      {m[<span class="dv">4</span>],m[<span class="dv">5</span>]}   = <span class="bn">16&#39;h5012</span>;  <span class="co">// 04            JEQ   EXIT</span>
+      {m[<span class="dv">6</span>],m[<span class="dv">7</span>]}   = <span class="bn">16&#39;h1018</span>;  <span class="co">// 06            ADD   K1   </span>
+      {m[<span class="dv">8</span>],m[<span class="dv">9</span>]}   = <span class="bn">16&#39;h3016</span>;  <span class="co">// 08            ST    I    </span>
+      {m[<span class="dv">10</span>],m[<span class="dv">11</span>]} = <span class="bn">16&#39;h0014</span>;  <span class="co">// 0A            LD    SUM  </span>
+      {m[<span class="dv">12</span>],m[<span class="dv">13</span>]} = <span class="bn">16&#39;h1016</span>;  <span class="co">// 0C            ADD   I    </span>
+      {m[<span class="dv">14</span>],m[<span class="dv">15</span>]} = <span class="bn">16&#39;h3014</span>;  <span class="co">// 0E            ST    SUM  </span>
+      {m[<span class="dv">16</span>],m[<span class="dv">17</span>]} = <span class="bn">16&#39;h2000</span>;  <span class="co">// 10            JMP   LOOP</span>
+      {m[<span class="dv">18</span>],m[<span class="dv">19</span>]} = <span class="bn">16&#39;h2012</span>;  <span class="co">// 12    EXIT:   JMP   EXIT</span>
+      {m[<span class="dv">20</span>],m[<span class="dv">21</span>]} = <span class="bn">16&#39;h0000</span>;  <span class="co">// 14    SUM:    WORD  0    </span>
+      {m[<span class="dv">22</span>],m[<span class="dv">23</span>]} = <span class="bn">16&#39;h0000</span>;  <span class="co">// 16    I:      WORD  0    </span>
+      {m[<span class="dv">24</span>],m[<span class="dv">25</span>]} = <span class="bn">16&#39;h0001</span>;  <span class="co">// 18    K1:     WORD  1    </span>
+      {m[<span class="dv">26</span>],m[<span class="dv">27</span>]} = <span class="bn">16&#39;h000A</span>;  <span class="co">// 1A    K10:    WORD  10            </span>
+    <span class="kw">end</span> <span class="kw">else</span> <span class="kw">begin</span>
+      IR = {m[PC], m[PC<span class="dv">+1</span>]};  <span class="co">// 指令擷取階段：IR=m[PC], 2 個 Byte 的記憶體</span>
+      pc0= PC;                <span class="co">// 儲存舊的 PC 值在 pc0 中。</span>
+      PC = PC<span class="dv">+2</span>;              <span class="co">// 擷取完成，PC 前進到下一個指令位址</span>
+      <span class="kw">case</span> (<span class="ot">`OP</span>)              <span class="co">// 解碼、根據 OP 執行動作</span>
+        <span class="dv">LD:</span> A = <span class="ot">`M</span>;           <span class="co">// LD C</span>
+        <span class="dv">ST:</span> <span class="ot">`M</span> = A;           <span class="co">// ST C</span>
+        <span class="dv">CMP:</span> <span class="kw">begin</span> <span class="ot">`N</span>=(A &lt; <span class="ot">`M</span>); <span class="ot">`Z</span>=(A==<span class="ot">`M</span>); <span class="kw">end</span> <span class="co">// CMP C</span>
+        <span class="dv">ADD:</span> A = A + <span class="ot">`M</span>;      <span class="co">// ADD C</span>
+        <span class="dv">JMP:</span> PC = <span class="ot">`C</span>;         <span class="co">// JMP C</span>
+        <span class="dv">JEQ:</span> <span class="kw">if</span> (<span class="ot">`Z</span>) PC=<span class="ot">`C</span>;   <span class="co">// JEQ C</span>
+      <span class="kw">endcase</span>
+      <span class="co">// 印出 PC, IR, SW, A 等暫存器值以供觀察</span>
+      <span class="dt">$display</span>(<span class="st">&quot;%4dns PC=%x IR=%x, SW=%x, A=%d&quot;</span>, <span class="dt">$stime</span>, pc0, IR, SW, A); 
+     <span class="kw">end</span>
+  <span class="kw">end</span>
+<span class="kw">endmodule</span></code></pre>
+<p>先前我們通常將「模組與測試程式」寫在一起，但是為了放上 FPGA，我們決定把「模組與測試程式」分開，然後在測試程式當中用 include 的方式引用模組。</p>
+<p>檔案：mcu0mTest.v</p>
+<pre class="sourceCode verilog"><code class="sourceCode verilog"><span class="ot">`include </span><span class="fl">&quot;mcu0m.v&quot;</span>
+
+<span class="kw">module</span> main;                <span class="co">// 測試程式開始</span>
+<span class="dt">reg</span> clock, reset;           
+<span class="dt">wire</span> [<span class="dv">15</span>:<span class="dv">0</span>] A, IR, PC, SW;
+mcu0 mcu(reset, clock, A, IR, PC);   <span class="co">// 宣告 cpu0mc 處理器</span>
+
+<span class="kw">initial</span> <span class="kw">begin</span> 
+  clock = <span class="dv">0</span>;          <span class="co">// 一開始 clock 設定為 0</span>
+  <span class="bn">#10</span>;
+  reset = <span class="dv">1</span>;
+  <span class="bn">#30</span>;
+  reset = <span class="dv">0</span>;
+<span class="kw">end</span>
+<span class="kw">always</span> <span class="bn">#10</span> clock=~clock;   <span class="co">// 每隔 10ns 反相，時脈週期為 20ns</span>
+<span class="kw">initial</span> <span class="bn">#2000</span> <span class="dt">$finish</span>;     <span class="co">// 在 2000 奈秒的時候停止測試。</span>
+<span class="kw">endmodule</span></code></pre>
+<p>接著、讓我們用 icarus 測試看看這個程式的運作是否正常，測試過程如下：</p>
+<pre><code>D:\SMIMS\ccc\mcu0m\icarus&gt;iverilog mcu0mTest.v -o mcu0mTest
+
+D:\SMIMS\ccc\mcu0m\icarus&gt;vvp mcu0mTest
+  50ns PC=0000 IR=0016, SW=0000, A=    0
+  70ns PC=0002 IR=401a, SW=8000, A=    0
+  90ns PC=0004 IR=5012, SW=8000, A=    0
+ 110ns PC=0006 IR=1018, SW=8000, A=    1
+ 130ns PC=0008 IR=3016, SW=8000, A=    1
+ 150ns PC=000a IR=0014, SW=8000, A=    0
+ 170ns PC=000c IR=1016, SW=8000, A=    1
+ 190ns PC=000e IR=3014, SW=8000, A=    1
+ 210ns PC=0010 IR=2000, SW=8000, A=    1
+ 230ns PC=0000 IR=0016, SW=8000, A=    1
+ 250ns PC=0002 IR=401a, SW=8000, A=    1
+ 270ns PC=0004 IR=5012, SW=8000, A=    1
+ 290ns PC=0006 IR=1018, SW=8000, A=    2
+ 310ns PC=0008 IR=3016, SW=8000, A=    2
+ 330ns PC=000a IR=0014, SW=8000, A=    1
+ 350ns PC=000c IR=1016, SW=8000, A=    3
+ 370ns PC=000e IR=3014, SW=8000, A=    3
+ 390ns PC=0010 IR=2000, SW=8000, A=    3
+ 410ns PC=0000 IR=0016, SW=8000, A=    2
+ 430ns PC=0002 IR=401a, SW=8000, A=    2
+ 450ns PC=0004 IR=5012, SW=8000, A=    2
+ 470ns PC=0006 IR=1018, SW=8000, A=    3
+ 490ns PC=0008 IR=3016, SW=8000, A=    3
+ 510ns PC=000a IR=0014, SW=8000, A=    3
+ 530ns PC=000c IR=1016, SW=8000, A=    6
+ 550ns PC=000e IR=3014, SW=8000, A=    6
+ 570ns PC=0010 IR=2000, SW=8000, A=    6
+ 590ns PC=0000 IR=0016, SW=8000, A=    3
+ 610ns PC=0002 IR=401a, SW=8000, A=    3
+ 630ns PC=0004 IR=5012, SW=8000, A=    3
+ 650ns PC=0006 IR=1018, SW=8000, A=    4
+ 670ns PC=0008 IR=3016, SW=8000, A=    4
+ 690ns PC=000a IR=0014, SW=8000, A=    6
+ 710ns PC=000c IR=1016, SW=8000, A=   10
+ 730ns PC=000e IR=3014, SW=8000, A=   10
+ 750ns PC=0010 IR=2000, SW=8000, A=   10
+ 770ns PC=0000 IR=0016, SW=8000, A=    4
+ 790ns PC=0002 IR=401a, SW=8000, A=    4
+ 810ns PC=0004 IR=5012, SW=8000, A=    4
+ 830ns PC=0006 IR=1018, SW=8000, A=    5
+ 850ns PC=0008 IR=3016, SW=8000, A=    5
+ 870ns PC=000a IR=0014, SW=8000, A=   10
+ 890ns PC=000c IR=1016, SW=8000, A=   15
+ 910ns PC=000e IR=3014, SW=8000, A=   15
+ 930ns PC=0010 IR=2000, SW=8000, A=   15
+ 950ns PC=0000 IR=0016, SW=8000, A=    5
+ 970ns PC=0002 IR=401a, SW=8000, A=    5
+ 990ns PC=0004 IR=5012, SW=8000, A=    5
+1010ns PC=0006 IR=1018, SW=8000, A=    6
+1030ns PC=0008 IR=3016, SW=8000, A=    6
+1050ns PC=000a IR=0014, SW=8000, A=   15
+1070ns PC=000c IR=1016, SW=8000, A=   21
+1090ns PC=000e IR=3014, SW=8000, A=   21
+1110ns PC=0010 IR=2000, SW=8000, A=   21
+1130ns PC=0000 IR=0016, SW=8000, A=    6
+1150ns PC=0002 IR=401a, SW=8000, A=    6
+1170ns PC=0004 IR=5012, SW=8000, A=    6
+1190ns PC=0006 IR=1018, SW=8000, A=    7
+1210ns PC=0008 IR=3016, SW=8000, A=    7
+1230ns PC=000a IR=0014, SW=8000, A=   21
+1250ns PC=000c IR=1016, SW=8000, A=   28
+1270ns PC=000e IR=3014, SW=8000, A=   28
+1290ns PC=0010 IR=2000, SW=8000, A=   28
+1310ns PC=0000 IR=0016, SW=8000, A=    7
+1330ns PC=0002 IR=401a, SW=8000, A=    7
+1350ns PC=0004 IR=5012, SW=8000, A=    7
+1370ns PC=0006 IR=1018, SW=8000, A=    8
+1390ns PC=0008 IR=3016, SW=8000, A=    8
+1410ns PC=000a IR=0014, SW=8000, A=   28
+1430ns PC=000c IR=1016, SW=8000, A=   36
+1450ns PC=000e IR=3014, SW=8000, A=   36
+1470ns PC=0010 IR=2000, SW=8000, A=   36
+1490ns PC=0000 IR=0016, SW=8000, A=    8
+1510ns PC=0002 IR=401a, SW=8000, A=    8
+1530ns PC=0004 IR=5012, SW=8000, A=    8
+1550ns PC=0006 IR=1018, SW=8000, A=    9
+1570ns PC=0008 IR=3016, SW=8000, A=    9
+1590ns PC=000a IR=0014, SW=8000, A=   36
+1610ns PC=000c IR=1016, SW=8000, A=   45
+1630ns PC=000e IR=3014, SW=8000, A=   45
+1650ns PC=0010 IR=2000, SW=8000, A=   45
+1670ns PC=0000 IR=0016, SW=8000, A=    9
+1690ns PC=0002 IR=401a, SW=8000, A=    9
+1710ns PC=0004 IR=5012, SW=8000, A=    9
+1730ns PC=0006 IR=1018, SW=8000, A=   10
+1750ns PC=0008 IR=3016, SW=8000, A=   10
+1770ns PC=000a IR=0014, SW=8000, A=   45
+1790ns PC=000c IR=1016, SW=8000, A=   55
+1810ns PC=000e IR=3014, SW=8000, A=   55
+1830ns PC=0010 IR=2000, SW=8000, A=   55
+1850ns PC=0000 IR=0016, SW=8000, A=   10
+1870ns PC=0002 IR=401a, SW=4000, A=   10
+1890ns PC=0004 IR=5012, SW=4000, A=   10
+1910ns PC=0012 IR=2012, SW=4000, A=   10
+1930ns PC=0012 IR=2012, SW=4000, A=   10
+1950ns PC=0012 IR=2012, SW=4000, A=   10
+1970ns PC=0012 IR=2012, SW=4000, A=   10
+1990ns PC=0012 IR=2012, SW=4000, A=   10</code></pre>
+<p>您可以看到上述的測試結果中，1+2+...+10 的結果 55 正確的被計算出來了。</p>
+<h3 id="放上-fpga-實際執行">放上 FPGA 實際執行</h3>
+<p>接著、就讓我們將程式放到北瀚科技 (SMIMS) 的 「VeriLite Altera C4」 FPGA 板上去執行，以下是該 FPGA 版的樣子。</p>
+<div class="figure">
+<img src="../img/SMIMS_board.png" alt="圖、北瀚科技 (SMIMS) 的 VeriLite Altera C4 FPGA 板" /><p class="caption">圖、北瀚科技 (SMIMS) 的 VeriLite Altera C4 FPGA 板</p>
+</div>
+<p>由於北瀚的開發工具必須搭配 Altera 的 Quartus II 使用，所以我們必須先將 mcu0m.v 先用 Quartus II 建立專案並且編譯過之後，才能用北瀚的 VeriComm 工具進行燒錄與執行監控等任務，以下是我們用 Quartus II 編譯時的畫面。</p>
+<div class="figure">
+<img src="../img/mcu0m_quartus2.png" />
+</div>
+<p>接著我們用北瀚的 HDL Auto Assign Pin 工具產生腳位綁定檔，以下是腳位綁定時的一個畫面。</p>
+<div class="figure">
+<img src="../img/mcu0m_pinassign.png" />
+</div>
+<p>然後我們將產生的 mcu0m.qsf 檔案複製到 Quartus II 專案中，重新編譯過即可產生燒錄檔 mcu0m.rbf 檔。</p>
+<p>接著開啟 VeriComm 並進行燒錄，可以看到該 FPGA 在 VeriComm 監控模式下輸出的波形圖如下。</p>
+<div class="figure">
+<img src="../img/mcu0m_wave.png" />
+</div>
+<p>您可以看到該結果中正確的計算出 1+2+...+10 = 55 的結果，這代表我們的 mcu0m 模組確實可以放上 FPGA 並且正確的運作了。</p>
+<h3 id="結語">結語</h3>
+<p>必須注意的是，北瀚的 HDL Auto Assign Pin 由於是他們自己寫的一個簡易 Verilog 剖析器，並沒有支援完整的 Verilog 語法，因此在剖析 mcu0m.v 時有失敗的情況，因此筆者將 mcu0m.v 的內容全部刪除之後才交給 HDL Auto Assign Pin 剖析，如此就能正確產生腳位對應檔。</p>
+<p>(或許北瀚應該考慮改用 icarus 的剖析器，這樣應該就不用自己辛苦的寫剖析器，也可以支援完整的語法了)</p>
+<p>上述編譯、燒錄與執行過程還算蠻漫長的，所以筆者將自己的操作過程錄影了下來，如果本文描述還有不清楚的地方，可以進一步參考下列影片。</p>
+<ul>
+<li><a href="http://youtu.be/BXoOSgG_j18">YouTube 影片：開放電腦計畫 - 將 MCU0m 放上北瀚的 FPGA 板執行</a></li>
+</ul>
+<p>【本文由陳鍾誠取材並修改自 <a href="http://zh.wikipedia.org/">維基百科</a>，採用創作共用的 <a href="http://creativecommons.org/licenses/by-sa/3.0/tw/">姓名標示、相同方式分享</a> 授權】</p>
+</div>
+<div id="footer">
+<a href="https://www.facebook.com/groups/programmerMagazine/">程式人雜誌</a> ，採用 <a href="http://creativecommons.org/licenses/by-sa/3.0/tw/ ">創作共用：姓名標示、相同方式分享</a> 授權，歡迎加入 <a href="https://www.facebook.com/groups/programmerMagazine/">雜誌社團</a>
+</div>
+</body>
+</html>

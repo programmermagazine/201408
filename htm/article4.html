@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../css/pmag.css" type="text/css" />
+</head>
+<body>
+<div id="header_wrap">
+   <h1><a href="https://www.facebook.com/groups/programmerMagazine">程式人雜誌</a> <sub> --  <a href="http://programmermagazine.github.io/201408/htm/home.html">2014 年 8 月號</a> (開放公益出版品)</sub></h1>
+</div>
+<div id="content">
+<div id="TOC">
+<ul>
+<li><a href="#visual-basic-6.0-利用-webbrowser-寫-html-網頁預覽器-作者廖憲得-0xde">[Visual Basic 6.0] 利用 WebBrowser 寫 Html 網頁預覽器 (作者：廖憲得 0xde)</a></li>
+</ul>
+</div>
+<h2 id="visual-basic-6.0-利用-webbrowser-寫-html-網頁預覽器-作者廖憲得-0xde">[Visual Basic 6.0] 利用 WebBrowser 寫 Html 網頁預覽器 (作者：廖憲得 0xde)</h2>
+<p>首先該如何叫出 WebBrowser 瀏覽器元件呢?</p>
+<div class="figure">
+<img src="../img/VB1.jpg" />
+</div>
+<p>專案 =&gt; 設定使用元件 找到 &quot;Microsoft Internet Controls&quot; 打勾 =&gt; 確定</p>
+<div class="figure">
+<img src="../img/VB2.jpg" />
+</div>
+<p>簡單的 WebBrowser 基礎程式碼</p>
+<pre class="sourceCode monobasic"><code class="sourceCode monobasic">上一頁 WebBrowser1.GoBack 
+下一頁 WebBrowser1.GoForward 
+瀏覽網址 WebBrowser1.Navigate (<span class="st">&quot;網址&quot;</span>) 
+重新整理 WebBrowser1.Refresh 
+搜索 WebBrowser1.GoSearch 
+停止 WebBrowser1.Stop </code></pre>
+<p>※當出現錯誤訊息：(找不到檔: 'C:32.dll')</p>
+<div class="figure">
+<img src="../img/VB3.jpg" />
+</div>
+<p>將以下 Code 用記事本填入，並另存新檔為 XXX.reg (登錄檔)</p>
+<pre class="sourceCode monobasic"><code class="sourceCode monobasic">Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\TypeLib\{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}]
+
+[HKEY_CLASSES_ROOT\TypeLib\{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}\1.1]
+@=<span class="st">&quot;Microsoft Internet Controls&quot;</span>
+
+[HKEY_CLASSES_ROOT\TypeLib\{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}\1.1\0]
+
+[HKEY_CLASSES_ROOT\TypeLib\{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}\1.1\0\win32]
+@=<span class="st">&quot;C:</span>\\<span class="st">WINDOWS</span>\\<span class="st">system32</span>\\<span class="st">ieframe.dll&quot;</span></code></pre>
+<div class="figure">
+<img src="../img/VB4.jpg" />
+</div>
+<div class="figure">
+<img src="../img/VB5.jpg" />
+</div>
+<p>登錄即可。</p>
+<div class="figure">
+<img src="../img/VB7.jpg" />
+</div>
+<p>Html 網頁預覽器</p>
+<pre class="sourceCode monobasic"><code class="sourceCode monobasic"><span class="kw">Private</span> <span class="kw">Sub </span>HtmlTxt_Change()
+Open App.Path &amp; <span class="st">&quot;/Html.htm&quot;</span> <span class="kw">For </span>Output <span class="kw">As</span> #1
+
+Print #1, HtmlTxt
+
+WebBrowserHtml.Navigate App.Path &amp; <span class="st">&quot;/Html.htm&quot;</span>
+Close
+<span class="kw">End Sub</span></code></pre>
+<ol style="list-style-type: decimal">
+<li>在表單上放置一個 WebBrowser 並且將它重新命名為 WebBrowserHtml</li>
+<li>在表單上放置一個 TextBox 並且將它重新命名為 HtmlTxt</li>
+</ol>
+<ul>
+<li>檔案下載：<a href="http://files.dotblogs.com.tw/0xde/1311/20131112144644418.rar">WebBrowser Html 預覽器.rar</a></li>
+</ul>
+<p>【本文作者為「廖憲得」，原文網址為： <a href="http://www.dotblogs.com.tw/0xde/archive/2013/11/12/127829.aspx">http://www.dotblogs.com.tw/0xde/archive/2013/11/12/127829.aspx</a> ，由陳鍾誠編輯後納入本雜誌】</p>
+</div>
+<div id="footer">
+<a href="https://www.facebook.com/groups/programmerMagazine/">程式人雜誌</a> ，採用 <a href="http://creativecommons.org/licenses/by-sa/3.0/tw/ ">創作共用：姓名標示、相同方式分享</a> 授權，歡迎加入 <a href="https://www.facebook.com/groups/programmerMagazine/">雜誌社團</a>
+</div>
+</body>
+</html>
