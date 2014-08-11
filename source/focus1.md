@@ -6,7 +6,7 @@
 
 FPGA 是由一種稱為 CLB (Configurable Logic Block) 或 LAB (Logic Array Block) 的基礎區塊所組成的。下圖是一個 CLB 區塊的典型結構，其中包含一個全加器 (FA)、一個 D-Type 的正反器、三個多工器 (mux) 與兩個三輸入的 Lookup tables (3-LUTs)。
 
-![圖、FPGA 的邏輯區塊 CLB ](../img/cell.png)
+![圖、FPGA 的邏輯區塊 CLB ](../img/Cell.png)
 
 在上圖的 CLB 區塊中，如果走上面的全加器路徑，兩個 3-LUTs 的輸出會被相加，加上 carry-in 之後就成了一組完整的全加器電路。由於該全加器FA的輸入是3-LUTs 的輸出，因此 carry-out 的輸出結果可以寫成如下算式。
 

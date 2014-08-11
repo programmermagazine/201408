@@ -18,14 +18,14 @@
 <li><a href="#fpga-簡介">FPGA 簡介</a></li>
 </ul>
 </div>
-<h2 id="fpga-簡介">FPGA 簡介</h2>
+<h2 id="fpga-簡介"><a href="#fpga-簡介">FPGA 簡介</a></h2>
 <p>在目前的數位電路技術當中，FPGA與CPLD是兩種可程式化的電路裝置，其中CPLD是永久性可程式化電路，只要燒錄進去之後就會永久存在，即使關機重開，電路仍然會存在的一種技術。而FPGA則是像 RAM一樣在關機後就會消失的可程式化電路，因此通常會搭配一塊 EPROM ，在開機的時候將電路燒錄到FPGA當中，讓電路看起來就像永久存在一樣。</p>
 <div class="figure">
 <img src="../img/FPGA_IC.png" alt="圖、Altera StratixIVGX FPGA" /><p class="caption">圖、Altera StratixIVGX FPGA</p>
 </div>
 <p>FPGA 是由一種稱為 CLB (Configurable Logic Block) 或 LAB (Logic Array Block) 的基礎區塊所組成的。下圖是一個 CLB 區塊的典型結構，其中包含一個全加器 (FA)、一個 D-Type 的正反器、三個多工器 (mux) 與兩個三輸入的 Lookup tables (3-LUTs)。</p>
 <div class="figure">
-<img src="../img/cell.png" alt="圖、FPGA 的邏輯區塊 CLB" /><p class="caption">圖、FPGA 的邏輯區塊 CLB</p>
+<img src="../img/Cell.png" alt="圖、FPGA 的邏輯區塊 CLB" /><p class="caption">圖、FPGA 的邏輯區塊 CLB</p>
 </div>
 <p>在上圖的 CLB 區塊中，如果走上面的全加器路徑，兩個 3-LUTs 的輸出會被相加，加上 carry-in 之後就成了一組完整的全加器電路。由於該全加器FA的輸入是3-LUTs 的輸出，因此 carry-out 的輸出結果可以寫成如下算式。</p>
 <blockquote>
